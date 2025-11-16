@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "testchrome": "wdio run ./src/configs/wdio.chrome.conf.js",
+    "testchromecucumber": "wdio run ./src/configs/wdio.chrome.cucumber.conf.js",
     "test": "wdio run ./src/configs/wdio.conf.js"
   },
   "keywords": [
@@ -16,8 +17,10 @@
   "author": "tanyawbw7@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^10.9.0",
     "@wdio/allure-reporter": "^9.20.0",
     "@wdio/cli": "^9.20.0",
+    "@wdio/cucumber-framework": "^9.20.0",
     "@wdio/local-runner": "^9.20.0",
     "@wdio/mocha-framework": "^9.20.0",
     "@wdio/spec-reporter": "^9.20.0",

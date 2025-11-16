@@ -35,11 +35,6 @@ class LoginComponent extends BaseComponent {
         await clearElementValue(this.input('password'));
     }
 
-    // async getErrorMessage() {
-    //     await this.errorMessage.waitForDisplayed();
-    //     return this.errorMessage.getText();
-    // }
-
     async login(username, password) {
         await this.input('username').setValue(username);
         await this.input('password').setValue(password);

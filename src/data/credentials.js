@@ -1,6 +1,6 @@
     const valid_usernames = [
         "standard_user",
-        "performance_glitch_user",
+        "problem_user",
         "visual_user"
     ];
 
