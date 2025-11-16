@@ -6,7 +6,8 @@
   "scripts": {
     "testchrome": "wdio run ./src/configs/wdio.chrome.conf.js",
     "testchromecucumber": "wdio run ./src/configs/wdio.chrome.cucumber.conf.js",
-    "test": "wdio run ./src/configs/wdio.conf.js"
+    "test": "wdio run ./src/configs/wdio.conf.js",
+    "testcucumber": "wdio run ./src/configs/wdio.cucumber.conf.js"
   },
   "keywords": [
     "wdio",

@@ -26,3 +26,8 @@ Then('I should see the error message {string}', async (message) => {
     const errorMessage =  await page('login').login.errorMessage;
     await expect(errorMessage).toHaveText(expect.stringContaining(message));
 });
+
+Then('I should see the dashboard title {string}', async (dashboardTitle) => {
+    const appLogo = await page("inventory").header.appLogo;
+    await expect(appLogo).toHaveText(dashboardTitle);
+});
