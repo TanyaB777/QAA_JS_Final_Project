@@ -134,10 +134,11 @@ exports.config = {
     framework: 'cucumber',
 
     cucumberOpts: {
-        require: ['./src/step-definitions/*.steps.js'],
+        require: ['./src/step-definitions/*.steps.js',
+             './src/features/support/hooks.js'],
         timeout: 60000,
     },
-    
+
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -210,8 +211,16 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {string} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
+    beforeSession: function (config, capabilities, specs) {
+        const browserName = capabilities.browserName || 'unknown_browser';
+
+        const uniqueDir = `allure-results/${browserName}`; 
+
+        const allureReporter = config.reporters.find(reporter => reporter[0] === 'allure');
+        if (allureReporter) {
+            allureReporter[1].outputDir = uniqueDir;
+        }
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -237,9 +246,8 @@ exports.config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    beforeTest: function (test, context) {
-        console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);
-    },
+    // beforeTest: function (test, context) {
+    // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
@@ -262,24 +270,8 @@ exports.config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (error) {
-            console.log(`TEST FAILED: ${test.title} (${duration}ms) with error "${error.message}"`);
-
-            const filename = test.title + '.png';
-            const dirPath = './artifacts/screenshots/';
-        
-            if (!existsSync(dirPath)) {
-                mkdirSync(dirPath, {
-                    recursive: true,
-                });
-            }
-
-            await browser.saveScreenshot(dirPath + filename);
-        }
-        else
-            console.log(`TEST FINISHED: ${test.title} (${duration}ms)`);
-    },
+    // afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    // },
 
     /**
      * Hook that gets executed after the suite has ended
@@ -321,19 +313,19 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    onComplete: function(exitCode, config, capabilities, results) {
-        return new Promise((resolve, reject) => {
-            exec('npx allure generate allure-results --clean', (err, stdout, stderr) => {
-                if (err) {
-                    console.error(stderr);
-                    return reject(new Error('Could not generate Allure report'));
-                }
-                console.log(stdout);
-                console.log('Allure report successfully generated');
-                resolve();
-            });
-        });
-    },
+    // onComplete: function(exitCode, config, capabilities, results) {
+    //     return new Promise((resolve, reject) => {
+    //         exec('npx allure generate allure-results --clean', (err, stdout, stderr) => {
+    //             if (err) {
+    //                 console.error(stderr);
+    //                 return reject(new Error('Could not generate Allure report'));
+    //             }
+    //             console.log(stdout);
+    //             console.log('Allure report successfully generated');
+    //             resolve();
+    //         });
+    //     });
+    // },
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session

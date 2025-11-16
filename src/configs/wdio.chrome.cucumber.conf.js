@@ -119,7 +119,8 @@ exports.config = {
     framework: 'cucumber',
 
     cucumberOpts: {
-        require: ['./src/step-definitions/*.steps.js'],
+        require: ['./src/step-definitions/*.steps.js',
+             './src/features/support/hooks.js'],
         timeout: 60000,
     },
     
@@ -222,9 +223,8 @@ exports.config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    beforeTest: function (test, context) {
-        console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);
-    },
+    // beforeTest: function (test, context) {
+    // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
@@ -247,24 +247,8 @@ exports.config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (error) {
-            console.log(`TEST FAILED: ${test.title} (${duration}ms) with error "${error.message}"`);
-
-            const filename = test.title + '.png';
-            const dirPath = './artifacts/screenshots/';
-        
-            if (!existsSync(dirPath)) {
-                mkdirSync(dirPath, {
-                    recursive: true,
-                });
-            }
-
-            await browser.saveScreenshot(dirPath + filename);
-        }
-        else
-            console.log(`TEST FINISHED: ${test.title} (${duration}ms)`);
-    },
+    // afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    // },
 
     /**
      * Hook that gets executed after the suite has ended
