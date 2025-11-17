@@ -3,7 +3,9 @@ const allure = require('@wdio/allure-reporter').default;
 const { existsSync, mkdirSync } = require('fs');
 
 Before(function (scenario) {
-    console.log("SCENARIO STARTED:", browser.capabilities.browserName);
+    console.log(
+        `SCENARIO STARTED: ${scenario.pickle.name} on ${browser.capabilities.browserName}`
+    );
 });
 
 AfterStep(async function ({ result, pickleStep }) {

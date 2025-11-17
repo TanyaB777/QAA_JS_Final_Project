@@ -1,8 +1,8 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const {page} = require("../po/pages");  
 
-Given('I open the login page', async () => {
-    await page('login').open();
+Given('I open the {string} page', async (pageName) => {
+    await page(pageName).open();
 });
 
 When('I type {string} and {string} into the login fields', async (username, password) => {
