@@ -4,12 +4,16 @@
  * 
  */
 
+const isMac = process.platform === 'darwin';
+
 async function clearElementValue(element) {
     try {
         await element.waitForDisplayed();
 
         await element.click();
-        await browser.keys(['Control', 'a']);
+        const modifierKey = isMac ? 'Meta' : 'Control';
+
+        await browser.keys([modifierKey, 'a']);
         await browser.keys('Backspace');
     }
     catch (error) {
