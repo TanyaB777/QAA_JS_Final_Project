@@ -1,6 +1,3 @@
-const { existsSync, mkdirSync } = require('fs');
-const { exec } = require('child_process');
-
 exports.config = {
     //
     // ====================
@@ -54,27 +51,26 @@ exports.config = {
     //
     capabilities: [
         {
-            browserName: 'MicrosoftEdge',
-            maxInstances: 3,
+            browserName: 'edge',
             'ms:edgeOptions': {
-                args: ['--window-size=1920,1080','--log-level=3',]
-            },
-            specs: [
-                '../features/**/*.feature'
-            ],
+                args: [
+                    '--window-size=1920,1080',
+                    '--headless',
+                    '--disable-gpu'
+                ]
+            }
         },
         {
             browserName: 'firefox',
-            maxInstances: 3,
             'moz:firefoxOptions': {
-                args: ['--width=1920', '--height=1080','--log-level=3',
+                args: [
+                    '--width=1920',
+                    '--height=1080',
+                    '--headless'
                 ]
-            },
-            specs: [
-                '../features/**/*.feature'
-            ]
+            }
         }
-    ],
+    ],    
 
     //
     // ===================
@@ -83,7 +79,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: 'warn',
     //
     // Set specific log levels per logger
     // loggers:
@@ -163,10 +159,10 @@ exports.config = {
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 60000
-    },
+    // mochaOpts: {
+    //     ui: 'bdd',
+    //     timeout: 60000
+    // },
 
     //
     // =====
@@ -314,17 +310,6 @@ exports.config = {
      * @param {<Object>} results object containing test results
      */
     // onComplete: function(exitCode, config, capabilities, results) {
-    //     return new Promise((resolve, reject) => {
-    //         exec('npx allure generate allure-results --clean', (err, stdout, stderr) => {
-    //             if (err) {
-    //                 console.error(stderr);
-    //                 return reject(new Error('Could not generate Allure report'));
-    //             }
-    //             console.log(stdout);
-    //             console.log('Allure report successfully generated');
-    //             resolve();
-    //         });
-    //     });
     // },
     /**
     * Gets executed when a refresh happens.

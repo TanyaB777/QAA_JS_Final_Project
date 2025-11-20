@@ -33,6 +33,7 @@ describe("Login form", () => {
                 await page('login').login.loginButton.click();
 
                 const appLogo = await page("inventory").header.appLogo;
+                await browser.pause(2000);
                 await expect(appLogo).toHaveText(INVENTORY_PAGE_TITLE);
             });
         });
