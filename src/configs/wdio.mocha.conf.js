@@ -1,15 +1,15 @@
 const baseConfig = require('./wdio.base.conf.js');
+const { existsSync, mkdirSync } = require('fs');
 
 exports.config = {
     ...baseConfig.config,
     specs: [
-        '../features/**/*.feature'
+        '../specs/**/*.spec.js'
     ],
-    framework: 'cucumber',
-    cucumberOpts: {
-        require: ['./src/step-definitions/*.steps.js',
-             './src/features/support/hooks.js'],
-        timeout: 60000,
+    framework: 'mocha',
+    mochaOpts: {
+        ui: 'bdd',
+        timeout: 60000
     },
     beforeTest: function (test, context) {
         console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);

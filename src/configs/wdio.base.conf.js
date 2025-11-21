@@ -1,4 +1,3 @@
-const { existsSync, mkdirSync } = require('fs');
 const { exec } = require('child_process');
 
 exports.config = {
@@ -24,7 +23,7 @@ exports.config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        '../specs/**/*.spec.js'
+        //'../specs/**/*.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -130,7 +129,7 @@ exports.config = {
     //
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
-    framework: 'mocha',
+    //framework: 'mocha',
     
     //
     // The number of times to retry the entire specfile when it fails as a whole
@@ -156,10 +155,10 @@ exports.config = {
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 60000
-    },
+    // mochaOpts: {
+    //     ui: 'bdd',
+    //     timeout: 60000
+    // },
 
     //
     // =====
@@ -204,8 +203,14 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {string} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
+    beforeSession: function (config, capabilities, specs, cid) {
+        const uniqueDir = `/${capabilities.browserName}`; 
+
+        const allureReporter = config.reporters.find(reporter => reporter[0] === 'allure');
+        if (allureReporter) {
+            allureReporter[1].outputDir = allureReporter[1].outputDir + uniqueDir;
+        }
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -232,9 +237,9 @@ exports.config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    beforeTest: function (test, context) {
-        console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);
-    },
+    // beforeTest: function (test, context) {
+    //     console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);
+    // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
@@ -257,25 +262,8 @@ exports.config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (error) {
-            console.log(`TEST FAILED: ${test.title} (${duration}ms) with error "${error.message}"`);
-
-            const filename = `${test.title.replace(/\s+/g, '_')}_${Date.now()}.png`;
-            const dirPath = './artifacts/screenshots/';
-        
-            if (!existsSync(dirPath)) {
-                mkdirSync(dirPath, {
-                    recursive: true,
-                });
-            }
-
-            await browser.saveScreenshot(dirPath + filename);
-        }
-        else
-            console.log(`TEST FINISHED: ${test.title} (${duration}ms)`);
-    },
-
+    // afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    // },
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
@@ -318,17 +306,30 @@ exports.config = {
      */
     onComplete: function(exitCode, config, capabilities, results) {
         return new Promise((resolve, reject) => {
-            exec('npx allure generate allure-results --clean', (err, stdout, stderr) => {
+            const browsers = [...new Set(capabilities.map(cap => cap.browserName?.toLowerCase()).filter(Boolean))];
+    
+            if (browsers.length === 0) {
+                console.log('No browsers found to generate Allure reports');
+                return resolve();
+            }
+    
+            const commands = browsers.map(browser => 
+                `npx allure generate allure-results/${browser} --clean -o allure-report/${browser}`
+            );
+    
+            const execCommand = commands.join(' && ');
+    
+            exec(execCommand, (err, stdout, stderr) => {
                 if (err) {
                     console.error(stderr);
                     return reject(new Error('Could not generate Allure report'));
                 }
                 console.log(stdout);
-                console.log('Allure report successfully generated');
+                console.log('Allure report successfully generated for:', browsers.join(', '));
                 resolve();
             });
         });
-    },
+    },   
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session

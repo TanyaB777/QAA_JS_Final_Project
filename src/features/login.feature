@@ -1,7 +1,7 @@
 Feature: Login form validation
 
 @negative @login
-Scenario Outline: UC-1 Test Login form with empty credentials
+Scenario Outline: UC-1 Test Login form with "<username>" and Password, Followed by Clearing Both Fields
     Given I open the "Login" page
     When I type "<username>" and "<password>" into the login fields
     And I clear the username input
@@ -16,7 +16,7 @@ Scenario Outline: UC-1 Test Login form with empty credentials
      | user$%^&* | secret_sauce | Username is required |
 
 @negative @login
-  Scenario Outline: UC-2 Test Login form with credentials by passing Username
+  Scenario Outline: UC-2 Test Login form with credentials by passing "<username>" and empty Password
     Given I open the "Login" page
     When I type "<username>" and "<password>" into the login fields
     And I clear the password input
@@ -30,7 +30,7 @@ Scenario Outline: UC-1 Test Login form with empty credentials
      | user$%^&* | secret_sauce | Password is required |
 
 @positive @login
-Scenario Outline: UC-3 Test Login form with credentials by passing Username & Password
+Scenario Outline: UC-3 Test Login form with credentials by passing "<username>" and Password
     Given I open the "Login" page
     When I type "<username>" and "<password>" into the login fields
     And I click the "Login" button

@@ -1,4 +1,4 @@
-const baseConfig = require('./wdio.conf.js');
+const baseConfig = require('./wdio.mocha.conf.js');
 
 exports.config = {
     ...baseConfig.config,
