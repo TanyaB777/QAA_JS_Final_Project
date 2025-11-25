@@ -18,14 +18,16 @@ exports.config = {
         if (error) {
             console.log(`TEST FAILED: ${test.title} (${duration}ms) with error "${error.message}"`);
 
-            const filename = `${test.title.replace(/\s+/g, '_')}_${Date.now()}.png`;
-            const dirPath = './artifacts/screenshots/';
+            const filename = `${test.title.replace(/[\/\\?%*:|$^&"<> ]/g, '_')}_${Date.now()}.png`;
+            const dirPath = './artifacts/screenshots/'; 
         
             if (!existsSync(dirPath)) {
                 mkdirSync(dirPath, {
                     recursive: true,
                 });
             }
+
+            console.log(filename);
 
             await browser.saveScreenshot(dirPath + filename);
         }

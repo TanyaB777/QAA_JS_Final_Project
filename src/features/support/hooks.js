@@ -8,24 +8,22 @@ Before(function (scenario) {
     );
 });
 
-AfterStep(async function ({ result, pickleStep }) {
-    const stepName = pickleStep ? pickleStep.text : 'step';
-    const safeFilename = stepName.replace(/[\/\\?%*:|"<> ]/g, '_') + '.png';
-    const dirPath = './artifacts/screenshots/';
+After(async function (scenario) {
+    const scenarioName = scenario.pickle.name;
+    if (scenario.result.status === 'FAILED') {
+        console.log(`SCENARIO FAILED: ${scenarioName} with error "${scenario.result.message}"`);
 
-    if (!existsSync(dirPath)) {
-        mkdirSync(dirPath, { recursive: true });
+        const fileName = `${scenarioName.replace(/[\/\\?%*:|$^&"<> ]/g, '_')}_${Date.now()}.png`;
+        const dirPath = './artifacts/screenshots/';
+    
+        if (!existsSync(dirPath)) {
+            mkdirSync(dirPath, { recursive: true });
+        }
+
+        await browser.saveScreenshot(dirPath + fileName);
+
     }
-
-    if (result.status === 'FAILED') {
-        console.log(`STEP FAILED: ${stepName}`);
-        await browser.saveScreenshot(dirPath + safeFilename);
-        console.log(`STEP PASSED: ${stepName}`);
-    }
-});
-
-After(function (scenario) {
-    console.log(
-        `SCENARIO FINISHED: ${scenario.pickle.name} on ${browser.capabilities.browserName}`
+    else
+        console.log(`SCENARIO FINISHED: ${scenarioName} on ${browser.capabilities.browserName}`
     );
 });

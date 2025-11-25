@@ -57,8 +57,8 @@ exports.config = {
             'ms:edgeOptions': {
                 args: [
                     '--window-size=1920,1080',
-                    '--headless',
-                    '--disable-gpu'
+                //    '--headless',
+                //    '--disable-gpu'
                 ]
             }
         },
@@ -67,7 +67,7 @@ exports.config = {
             'moz:firefoxOptions': {
                 args: [
                     '--width=1920',
-                    '--height=1080',
+                //    '--height=1080',
                     '--headless'
                 ]
             }
