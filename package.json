@@ -7,9 +7,9 @@
     "test": "npx wdio run ./src/configs/wdio.mocha.conf.js",
     "test:edge": "npx wdio run ./src/configs/wdio.mocha.edge.conf.js",
     "test:firefox": "npx wdio run ./src/configs/wdio.mocha.firefox.conf.js",
-    "cucumber": "wdio run ./src/configs/wdio.cucumber.conf.js",
-    "cucumber:edge": "wdio run ./src/configs/wdio.cucumber.edge.conf.js",
-    "cucumber:firefox": "wdio run ./src/configs/wdio.cucumber.firefox.conf.js"
+    "cucumber": "npx wdio run ./src/configs/wdio.cucumber.conf.js",
+    "cucumber:edge": "npx wdio run ./src/configs/wdio.cucumber.edge.conf.js",
+    "cucumber:firefox": "npx wdio run ./src/configs/wdio.cucumber.firefox.conf.js"
   },
   "keywords": [
     "wdio",
