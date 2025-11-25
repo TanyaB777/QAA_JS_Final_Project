@@ -81,7 +81,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'warn',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -147,8 +147,9 @@ exports.config = {
     reporters: ['spec',
         ['allure', {
             outputDir: 'allure-results',
-            disableWebdriverStepsReporting: true,
-            disableWebdriverScreenshotsReporting: true,
+                addBrowserNameAsLabel: true,        
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: true,
             }
         ]
     ],
@@ -219,7 +220,6 @@ exports.config = {
      * @param {object}         browser      instance of created browser/device session
      */
     //before: function (capabilities, specs) {
-
     //},
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -237,8 +237,7 @@ exports.config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    //     console.log(`TEST STARTED: ${test.title} on ${browser.capabilities.browserName}`);
+    // beforeTest: function (test) {
     // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
@@ -306,12 +305,7 @@ exports.config = {
      */
     onComplete: function(exitCode, config, capabilities, results) {
         return new Promise((resolve, reject) => {
-            const browsers = [...new Set(capabilities.map(cap => cap.browserName?.toLowerCase()).filter(Boolean))];
-    
-            if (browsers.length === 0) {
-                console.log('No browsers found to generate Allure reports');
-                return resolve();
-            }
+            const browsers = [...capabilities.map(cap => cap.browserName.toLowerCase())];
     
             const commands = browsers.map(browser => 
                 `npx allure generate allure-results/${browser} --clean -o allure-report/${browser}`
@@ -325,7 +319,6 @@ exports.config = {
                     return reject(new Error('Could not generate Allure report'));
                 }
                 console.log(stdout);
-                console.log('Allure report successfully generated for:', browsers.join(', '));
                 resolve();
             });
         });

@@ -30,6 +30,6 @@ exports.config = {
             await browser.saveScreenshot(dirPath + filename);
         }
         else
-            console.log(`TEST FINISHED: ${test.title} (${duration}ms)`);
+            console.log(`TEST FINISHED: ${test.title} (${duration}ms) on ${browser.capabilities.browserName}`);
     }
 };

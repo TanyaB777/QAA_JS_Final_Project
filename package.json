@@ -15,7 +15,8 @@
     "wdio",
     "test",
     "js",
-    "node"
+    "node",
+    "cucumber"
   ],
   "author": "tanyawbw7@gmail.com",
   "license": "ISC",
