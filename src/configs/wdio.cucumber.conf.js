@@ -10,5 +10,6 @@ exports.config = {
         require: ['./src/step-definitions/*.steps.js',
              './src/features/support/hooks.js'],
         timeout: 60000,
+        tagExpression: ''
     }
 };

@@ -67,8 +67,8 @@ exports.config = {
             'moz:firefoxOptions': {
                 args: [
                     '--width=1920',
-                //    '--height=1080',
-                    '--headless'
+                    '--height=1080',
+                //    '--headless'
                 ]
             }
         }

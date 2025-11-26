@@ -4,5 +4,9 @@ exports.config = {
     ...baseConfig.config,
     capabilities: [
         { ...baseConfig.config.capabilities[0] }
-    ]
+    ],
+    cucumberOpts: {
+        ...baseConfig.config.cucumberOpts,
+        tagExpression: '@positive'
+    }
 };
