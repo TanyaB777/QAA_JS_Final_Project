@@ -305,7 +305,7 @@ exports.config = {
      */
     onComplete: function(exitCode, config, capabilities, results) {
         return new Promise((resolve, reject) => {
-            const browsers = [...capabilities.map(cap => cap.browserName.toLowerCase())];
+            const browsers = capabilities.map(cap => cap.browserName.toLowerCase());
     
             const commands = browsers.map(browser => 
                 `npx allure generate allure-results/${browser} --clean -o allure-report/${browser}`

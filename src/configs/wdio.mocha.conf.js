@@ -27,8 +27,6 @@ exports.config = {
                 });
             }
 
-            console.log(filename);
-
             await browser.saveScreenshot(dirPath + filename);
         }
         else
