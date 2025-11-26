@@ -10,8 +10,9 @@ When('I type {string} and {string} into the login fields', async (username, pass
     await page('login').login.input('password').setValue(password);
 });
 
-When('I clear the username input', async () => {
+When('I clear the username and password inputs', async () => {
     await page('login').login.clearUserNameInput();
+    await page('login').login.clearPasswordInput();
 });
 
 When('I clear the password input', async () => {

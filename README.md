@@ -24,7 +24,7 @@ Launch URL:  [SauceDemo](https://www.saucedemo.com/)
 3. Click on Login and validate the title `Swag Labs` in the dashboard.
 
 ### Notes
-Provide parallel execution, add logging for tests and use Data Provider to parametrize tests.
+Provide parallel execution, add logging for tests and use Data Provider to parametrize tests.  
 Make sure that all tasks are supported by these 3 conditions: UC-1; UC-2; UC-3.
 
 **To perform the task use the various of additional options:**
@@ -35,3 +35,12 @@ Make sure that all tasks are supported by these 3 conditions: UC-1; UC-2; UC-3.
 4. Patterns: Page Object;
 5. Assertions: Use from the selected framework;
 6. [Optional] Loggers: Use from the selected framework.
+
+**To run the tests, use the following commands:**
+
+`npm test` for Mocha  
+`npm run test:edge` for Mocha and MicrosoftEdge browswer  
+`npm run test:firefox` for Mocha and FireFox browser  
+`npm run cucumber` for Cucumber  
+`npm run cucumber:edge` for Cucumber and Microsoft Edge browswer  
+`npm run cucumber:firefox` for Cucumber and FireFox browser  

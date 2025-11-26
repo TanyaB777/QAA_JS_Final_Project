@@ -54,13 +54,10 @@ describe("Login form", () => {
                 await page('login').login.input('password').setValue(password);
                 allure.endStep();
 
-                allure.startStep("Clear username");
+                allure.startStep("Clear username and password inputs");
                 await page('login').login.clearUserNameInput();
-                allure.endStep();
-
-                allure.startStep("Clear password");
                 await page('login').login.clearPasswordInput();
-                allure.endStep();
+                allure.endStep()
 
                 allure.startStep("Click login button");
                 await page('login').login.loginButton.click();

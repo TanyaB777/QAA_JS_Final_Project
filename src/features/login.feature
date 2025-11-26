@@ -4,8 +4,7 @@ Feature: Login form validation
 Scenario Outline: UC-1 Test Login form with "<username>" and Password, Followed by Clearing Both Fields
     Given I open the "Login" page
     When I type "<username>" and "<password>" into the login fields
-    And I clear the username input
-    And I clear the password input
+    And I clear the username and password inputs
     And I click the "Login" button
     Then I should see the error message "<message>"
 

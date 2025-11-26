@@ -7,6 +7,8 @@ class LoginPage extends BasePage {
     constructor() {    
         super("/");
         this.login = new LoginComponent();
+        this.header = null;
+        this.footer = null;
     }
 
     get loginLogo() {   

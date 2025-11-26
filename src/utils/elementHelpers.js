@@ -4,14 +4,14 @@
  * 
  */
 
-const isMac = process.platform === 'darwin';
-
 async function clearElementValue(element) {
     try {
+        const isMac = process.platform === 'darwin';
+        const modifierKey = isMac ? 'Meta' : 'Control';
+
         await element.waitForDisplayed();
 
         await element.click();
-        const modifierKey = isMac ? 'Meta' : 'Control';
 
         await browser.keys([modifierKey, 'a']);
         await browser.keys('Backspace');
@@ -22,4 +22,4 @@ async function clearElementValue(element) {
     }
 }
 
-module.exports = { clearElementValue: clearElementValue };
+module.exports = { clearElementValue };
