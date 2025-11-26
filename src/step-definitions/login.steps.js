@@ -25,10 +25,12 @@ When('I click the "Login" button', async () => {
 
 Then('I should see the error message {string}', async (message) => {
     const errorMessage =  await page('login').login.errorMessage;
+    await expect(errorMessage).toBeDisplayed();
     await expect(errorMessage).toHaveText(expect.stringContaining(message));
 });
 
 Then('I should see the dashboard title {string}', async (dashboardTitle) => {
     const appLogo = await page("inventory").header.appLogo;
+    await expect(appLogo).toBeDisplayed();
     await expect(appLogo).toHaveText(dashboardTitle);
 });

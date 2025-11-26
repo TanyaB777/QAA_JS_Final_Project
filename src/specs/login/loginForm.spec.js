@@ -39,6 +39,7 @@ describe("Login form", () => {
 
                 allure.startStep("Verify inventory page is displayed");
                 const appLogo = await page("inventory").header.appLogo;
+                await expect(appLogo).toBeDisplayed();
                 await expect(appLogo).toHaveText(INVENTORY_PAGE_TITLE);
                 allure.endStep();
             });
@@ -65,6 +66,7 @@ describe("Login form", () => {
         
                 allure.startStep("Verify error message for empty username");
                 const errorMessage =  await page('login').login.errorMessage;
+                await expect(errorMessage).toBeDisplayed();
                 await expect(errorMessage).toHaveText(expect.stringContaining(EMPTY_USER_MESSAGE));
                 allure.endStep();
             });
@@ -87,6 +89,7 @@ describe("Login form", () => {
 
                 allure.startStep("Verify error message for empty password");
                 const errorMessage =  await page('login').login.errorMessage;
+                await expect(errorMessage).toBeDisplayed()
                 await expect(errorMessage).toHaveText(expect.stringContaining(EMPTY_PASSWORD_MESSAGE));
                 allure.endStep();
             });

@@ -1,4 +1,4 @@
-const { Before, After, AfterStep} = require('@cucumber/cucumber');
+const { Before, After} = require('@cucumber/cucumber');
 const allure = require('@wdio/allure-reporter').default;
 const { existsSync, mkdirSync } = require('fs');
 
